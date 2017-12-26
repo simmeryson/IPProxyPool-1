@@ -13,6 +13,18 @@ ip，端口，类型(0高匿名，1透明)，protocol(0 http,1 https),country(�
 '''
 parserList = [
     {
+        'urls': ['http://www.gatherproxy.com/zh/proxylist/country/?c=China#%s' % n for n in range(1,34)],
+        'type': 'xpath',
+        'pattern': ".//*[@id='tblproxy']/tbody/tr[position()>2]",
+        'position': {'ip': './td[2]', 'port': './td[3]', 'type': './td[4]', 'protocol': '','updatetime':'./td[1]','speed':'./td[8]'}
+    },
+    {
+        'urls': ['http://freeproxylists.net/zh/?page=%s' % n for n in range(1,24)],
+        'type': 'xpath',
+        'pattern': "./html/body/div[1]/div[2]/table/tbody/tr[position()>1]",
+        'position': {'ip': '/td[1]/a', 'port': './td[2]', 'type': './td[3]', 'protocol': './td[4]'}
+    },
+    {
         'urls': ['http://www.66ip.cn/%s.html' % n for n in ['index'] + list(range(2, 12))],
         'type': 'xpath',
         'pattern': ".//*[@id='main']/div/div[1]/table/tr[position()>1]",
@@ -103,7 +115,7 @@ DB_CONFIG = {
 
     'DB_CONNECT_TYPE': 'sqlalchemy',  # 'pymongo'sqlalchemy;redis
     # 'DB_CONNECT_STRING':'mongodb://localhost:27017/'
-    'DB_CONNECT_STRING': 'sqlite:///' + os.path.dirname(__file__) + '/data/proxy.db'
+    'DB_CONNECT_STRING': 'mysql+pymysql://root:kai123@localhost/proxy?charset=utf8'
     # DB_CONNECT_STRING : 'mysql+mysqldb://root:root@localhost/proxy?charset=utf8'
 
     # 'DB_CONNECT_TYPE': 'redis',  # 'pymongo'sqlalchemy;redis
